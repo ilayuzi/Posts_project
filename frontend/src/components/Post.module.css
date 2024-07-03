@@ -1,0 +1,51 @@
+.post {
+  margin: 1rem 0;
+  padding: 1rem;
+  padding-bottom: 3rem; /* Add extra padding at the bottom */
+  background-color: #cc94c1;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  position: relative; /* Ensure absolute positioning of deleteButton */
+  animation: animate-in 1s ease-out forwards;
+}
+
+.post a {
+  text-decoration: none;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #000000;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.text {
+  white-space: pre-wrap;
+  font-size: 1rem;
+  margin: 0.25rem 0 0 0;
+  color: #000000;
+  font-style: italic;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #685c62;
+  position: absolute;
+  bottom: 1rem; /* Position the button at the bottom */
+  left: 1rem; /* Position the button at the left */
+}
+
+@keyframes animate-in {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

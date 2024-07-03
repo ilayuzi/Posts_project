@@ -1,0 +1,130 @@
+.details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  max-width: 100%;
+  margin: auto;
+  box-sizing: border-box;
+  text-align: center;
+  position: relative; /* Allow absolute positioning of children */
+}
+
+.top_bar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 0; /* Space between top bar and title */
+  padding: 0 2rem; /* Padding to align with boundaries */
+  position: absolute;
+  top: 1rem;
+  left: 0;
+  right: 0;
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.author,
+.date {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.author {
+  margin-top: 4rem; /* Move the author element down */
+  justify-content: flex-start; /* Align author to the left */
+}
+
+.date {
+  /* font-style: italic; */
+  margin-top: 4rem;
+  justify-content: flex-end; /* Align date to the right */
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: #000000;
+  margin: 2rem 0 0 0; /* Increase top margin to accommodate top_bar */
+  text-align: center;
+}
+
+.text {
+  white-space: pre-wrap;
+  font-size: 1.3rem;
+  margin: 3.25rem 0 0 0;
+  color: #000000;
+  text-align: justify; /* Ensure all lines start at the same position */
+  padding: 0 2rem; /* Add padding to align the text properly */
+  /* font-style: italic; */
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 4rem;
+  gap: 3rem; /* Space between buttons */
+}
+
+.button {
+  font: inherit;
+  cursor: pointer;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  background-color: #e30d7c;
+  color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.backLink {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  font: inherit;
+  cursor: pointer;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  background-color: #e30d7c;
+  color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 600px) {
+  .top_bar {
+    flex-direction: column; /* Stack author and date vertically */
+    align-items: center; /* Center align author and date */
+    position: static; /* Make top_bar follow document flow */
+    margin-bottom: 1rem; /* Add some space below top_bar */
+    padding: 0; /* Remove padding */
+  }
+
+  .author,
+  .date {
+    justify-content: center; /* Center align in mobile view */
+    margin: 0.5rem 0; /* Add margin for spacing */
+  }
+
+  .title {
+    margin: 2rem 0 1rem 0; /* Adjust margin to make space for top_bar */
+  }
+
+  .buttons {
+    flex-direction: column;
+    gap: 2.5rem ;
+    width: auto; /* Ensure buttons container does not expand */
+    margin-top: 4rem;
+  }
+
+  .button {
+    width: auto; /* Ensure button width does not expand */
+  }
+}

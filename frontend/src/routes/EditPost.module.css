@@ -1,0 +1,49 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ensure the form takes up the entire viewport height */
+  
+  }
+  
+  .form {
+    width: 80%; /* Adjust width as needed */
+    max-width: 600px; /* Max width for the form */
+    padding: 2rem;
+    background-color: #cc94c1; /* Form background color */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for depth */
+  }
+  
+  .form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #000000;
+    font-weight: bold;
+  }
+  
+  .form textarea,
+  .form input[type="text"] {
+    width: 100%;
+    font: inherit;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc; /* Optional: Add border for input fields */
+  }
+  
+  
+  .button {
+    font: inherit;
+    cursor: pointer;
+    padding: 0.5rem 1.0rem;
+    border: none;
+    background-color: #000000;
+    color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 0.875rem;
+    margin-top: 1rem
+  }
+  
