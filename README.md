@@ -64,6 +64,7 @@ Ensure you have the following installed:
     ```
 
     The backend server will start on `http://localhost:4000`.
+    to query the server you need to go to `http://localhost:4000/graphql`
 
 2. Start the frontend development server:
 
