@@ -10,11 +10,11 @@ function MainHeader() {
 
   // Determine the page title and button visibility based on the current location
   switch (true) {
-    case location.pathname === "/create-post":
+    case location.pathname.includes("/create-post") :
       pageTitle = "New Post";
       showNewPostButton = false;
       break;
-    case /^\/[a-f0-9]{24}$/.test(location.pathname):
+      case /^\/page\/\d+\/[a-f0-9]{24}$/.test(location.pathname):
       pageTitle = "Post Details";
       showNewPostButton = false;
       break;

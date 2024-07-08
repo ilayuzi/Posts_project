@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useMutation, gql, useQuery } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import classes from "./NewPost.module.css";
 import { GET_POSTS } from "./Posts";
+import LoadingIndicator from "../UI/LoadingIndicator";
+import ErrorBlock from "../UI/Error.block";
 
 const ADD_POST = gql`
   mutation addPost($author: String!, $title: String!, $text: String!) {
@@ -17,7 +19,7 @@ const ADD_POST = gql`
 function NewPost() {
   const navigate = useNavigate();
 
-  const [mutate, { data, loading, error }] = useMutation(ADD_POST, {
+  const [mutate, { loading, error }] = useMutation(ADD_POST, {
     refetchQueries: [{ query: GET_POSTS }],
     onCompleted: () => {
       navigate(".."); // Navigate back to the posts list after adding a post
@@ -35,6 +37,19 @@ function NewPost() {
   };
 
   const [currentDateString] = useState(formatDate(currentDate));
+
+  if (loading) {
+    return <LoadingIndicator />;
+  }
+
+  if (error) {
+    return (
+      <ErrorBlock
+        title="An error occurred"
+        message={error.message || "Failed to fetch posts"}
+      />
+    );
+  }
 
   function handleSubmit(event) {
     event.preventDefault();

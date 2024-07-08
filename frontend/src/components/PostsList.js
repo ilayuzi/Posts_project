@@ -1,10 +1,13 @@
-import React, { useState } from "react";
-import Post from "./Post";
-import classes from "./PostsList.module.css";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import Post from './Post';
+import classes from './PostsList.module.css';
+import { usePage } from './PageContext';
 
 const PostsList = ({ posts }) => {
-  const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 6;
+  const navigate = useNavigate();
+  const { currentPage, setCurrentPage } = usePage()
 
   // Calculate the posts to be displayed on the current page
   const indexOfLastPost = currentPage * postsPerPage;
@@ -17,6 +20,7 @@ const PostsList = ({ posts }) => {
   // Handle page change
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+    navigate(`/page/${pageNumber}`);
   };
 
   return (
@@ -25,14 +29,14 @@ const PostsList = ({ posts }) => {
         <>
           <ul className={classes.posts}>
             {currentPosts.map((post) => (
-              <Post key={post._id} id={post._id} title={post.title} text={post.text} />
+              <Post key={post._id} id={post._id} title={post.title} text={post.text} currentPage={currentPage} />
             ))}
           </ul>
           <div className={classes.pagination}>
             {[...Array(totalPages)].map((_, index) => (
               <button
                 key={index}
-                className={`${classes.page_number} ${currentPage === index + 1 ? classes.active : ""}`}
+                className={`${classes.page_number} ${currentPage === index + 1 ? classes.active : ''}`}
                 onClick={() => handlePageChange(index + 1)}
               >
                 {index + 1}
@@ -41,7 +45,7 @@ const PostsList = ({ posts }) => {
           </div>
         </>
       ) : (
-        <div style={{ textAlign: "center", color: "black" }}>
+        <div style={{ textAlign: 'center', color: 'black' }}>
           <h2>There are no posts yet.</h2>
           <p>Start adding some!</p>
         </div>
@@ -51,4 +55,8 @@ const PostsList = ({ posts }) => {
 };
 
 export default PostsList;
+
+
+
+
 

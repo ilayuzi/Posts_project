@@ -1,9 +1,10 @@
-import React from "react";
-import { useQuery, gql } from "@apollo/client";
-import { Outlet } from "react-router-dom";
+import { gql, useQuery } from "@apollo/client";
+import React, { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import { usePage } from "../components/PageContext";
 import PostsList from "../components/PostsList";
-import LoadingIndicator from "../UI/LoadingIndicator";
 import ErrorBlock from "../UI/Error.block";
+import LoadingIndicator from "../UI/LoadingIndicator";
 
 const GET_POSTS = gql`
   query getPosts {
@@ -17,6 +18,16 @@ const GET_POSTS = gql`
 
 const Posts = () => {
   const { loading, error, data } = useQuery(GET_POSTS);
+  const { currentPage, setCurrentPage } = usePage();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (currentPage) {
+      setCurrentPage(parseInt(currentPage, 10));
+    } else {
+      navigate("/page/1");
+    }
+  }, [currentPage, setCurrentPage, navigate]);
 
   let content;
 
@@ -27,8 +38,8 @@ const Posts = () => {
   if (error) {
     content = (
       <ErrorBlock
-        title="An error ocurred"
-        message={error.message || "failed to fetch notes"}
+        title="An error occurred"
+        message={error.message || "Failed to fetch posts"}
       />
     );
   }
@@ -46,5 +57,3 @@ const Posts = () => {
 };
 
 export { GET_POSTS, Posts };
-
-
