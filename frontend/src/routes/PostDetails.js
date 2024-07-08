@@ -1,11 +1,9 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
-import LoadingIndicator from "../UI/LoadingIndicator";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ErrorBlock from "../UI/Error.block";
+import LoadingIndicator from "../UI/LoadingIndicator";
 import classes from "./PostDetails.module.css";
 import { GET_POSTS } from "./Posts";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
-import EditPost from "./EditPost";
 
 export const GET_POST_BY_ID = gql`
   query getPostById($id: ID!) {
@@ -31,22 +29,14 @@ const DELETE_POST = gql`
 `;
 
 function convertTimestampToReadableDate(timestampStr) {
-  // Create a new Date object using the timestamp
   const timestamp = Number(timestampStr);
   const date = new Date(timestamp);
-
-  // Format the date as needed, for example:
-  const readableDate = date.toLocaleString(); // Converts to a readable string
-
+  const readableDate = date.toLocaleString();
   return readableDate;
 }
 
 function PostDetails() {
-  const location = useLocation()
-  const query = new URLSearchParams(location.search)
-  const currentPage = query.get("page") || 1;
-
-  const { id } = useParams();
+  const { id, pageNumber } = useParams();
   const navigate = useNavigate();
 
   const { loading, error, data } = useQuery(GET_POST_BY_ID, {
@@ -56,9 +46,9 @@ function PostDetails() {
   const [deletePost] = useMutation(DELETE_POST, {
     variables: { id },
     onCompleted: () => {
-      navigate("..");
+      navigate(`/page/${pageNumber}`);
     },
-    refetchQueries: [{ query: GET_POSTS }], // Refetch the list of posts after deletion
+    refetchQueries: [{ query: GET_POSTS }],
   });
 
   async function handleDelete() {
@@ -98,17 +88,15 @@ function PostDetails() {
         </div>
         <p className={classes.title}>{post.title}</p>
         <p className={classes.text}>{post.text}</p>
-
-        
         <div className={classes.buttons}>
           <button onClick={handleDelete} className={classes.button}>
             Delete
           </button>
-          <Link to={`/${id}/edit`} state={post} className={classes.button}>
+          <Link to={`/page/${pageNumber}/${id}/edit`} state={post} className={classes.button}>
             Edit
           </Link>
         </div>
-        <Link to={"/"} className={classes.backLink}>
+        <Link to={`/page/${pageNumber}`} className={classes.backLink}>
           Back
         </Link>
       </main>
@@ -119,6 +107,7 @@ function PostDetails() {
 }
 
 export default PostDetails;
+
 
 
 

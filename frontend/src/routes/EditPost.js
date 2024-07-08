@@ -1,8 +1,7 @@
+import { gql, useMutation } from "@apollo/client";
 import React, { useState } from "react";
-import { gql, useMutation, useQuery } from "@apollo/client";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import LoadingIndicator from "../UI/LoadingIndicator";
-import ErrorBlock from "../UI/Error.block";
 import classes from "./EditPost.module.css";
 import { GET_POST_BY_ID } from "./PostDetails";
 
@@ -17,20 +16,18 @@ const UPDATE_POST = gql`
 `;
 
 function EditPost() {
-  const { id } = useParams();
+  const { id, pageNumber } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const post = location.state;
-  // const post = state;
-  //   const { post } = state;
+
+
+  const post = location.state || { title: "", text: "" };
 
   const [updatePost] = useMutation(UPDATE_POST, {
     onCompleted: () => {
-      navigate(`/${id}`); // Navigate back to the post details page after updating
+      navigate(`/page/${pageNumber}/${id}`); // Navigate back to post details with pagination
     },
-    refetchQueries: [{ query: GET_POST_BY_ID, 
-      variables: { id },
-     }]
+    refetchQueries: [{ query: GET_POST_BY_ID, variables: { id } }],
   });
 
   const [title, setTitle] = useState(post.title);
@@ -45,6 +42,8 @@ function EditPost() {
     }
   };
 
+  if (!post) return <LoadingIndicator />;
+
   return (
     <div className={classes.container}>
       <form onSubmit={handleSubmit} className={classes.form}>
@@ -52,23 +51,24 @@ function EditPost() {
         <input
           type="text"
           id="title"
-          value={title || post.title}
+          value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
         />
         <label htmlFor="text">Text</label>
         <textarea
           id="text"
-          value={text || post.text}
+          value={text}
           onChange={(e) => setText(e.target.value)}
-          required rows={20}
+          required
+          rows={20}
         />
-        <button type="submit" className={classes.button}>Save Changes</button>
+        <button type="submit" className={classes.button}>
+          Save Changes
+        </button>
       </form>
     </div>
   );
 }
 
 export default EditPost;
-
-
